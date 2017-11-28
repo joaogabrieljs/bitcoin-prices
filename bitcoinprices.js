@@ -40,7 +40,7 @@
 
         // Where we get bitcoinaverage data
         // or null if we run headless (not in browser)
-        url: "https://api.bitcoinaverage.com/ticker/all",
+        url: "https://apiv2.bitcoinaverage.com/indices/global/ticker/all",
 
         // Which of bitcoinaverages value we use to present prices
         marketRateVariable: "24h_avg",
@@ -146,12 +146,12 @@
                 throw new Error("Exchange rate data not available");
             }
 
-            var currencyData = this.data[source];
+            var currencyData = this.data[target + source];
             if(!currencyData) {
                 throw new Error("We do not have market data for currency: " + source);
             }
 
-            var rate = currencyData[this.config.marketRateVariable];
+            var rate = currencyData["averages"].day;
 
             if(!rate) {
                 throw new Error("Cannot parse bitcoinaverage data for " + source + " " + this.config.url);
